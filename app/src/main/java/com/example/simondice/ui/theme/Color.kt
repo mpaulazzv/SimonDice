@@ -4,10 +4,10 @@ import androidx.compose.ui.graphics.Color
 
 //Se definen los colores de la aplicación
 
-val red = Color(0xFFFE3131)
-val pink = Color(0xFFFB78B1)
-val yellow = Color(0xFFCDC02D)
-val blue = Color(0xFF2DA2CD)
+val red = Color(0xFFFF7171)
+val pink = Color(0xFFFF71A5)
+val yellow = Color(0xFFFFD971)
+val blue = Color(0xFF719EFF)
 val white = Color(0xFFFFFFFF)
 
 /*
