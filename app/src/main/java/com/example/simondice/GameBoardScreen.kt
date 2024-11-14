@@ -1,13 +1,11 @@
 package com.example.simondice
 
-import android.graphics.Color
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,19 +14,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import java.time.format.TextStyle
 
 
 @Composable()
@@ -108,8 +103,6 @@ fun GameBoardScreen(){
 @Composable
 fun GameBoard(){
 
-    var cellColor = remember { mutableStateOf<androidx.compose.ui.graphics.Color?>(null) }
-
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -126,19 +119,19 @@ fun GameBoard(){
                     when (row){
                         0 -> {
                             when (col){
-                                0-> cellColor.value = MaterialTheme.colorScheme.primary
-                                1-> cellColor.value = MaterialTheme.colorScheme.tertiary
+                                0->  GameCell(MaterialTheme.colorScheme.primary, painterResource(R.drawable.sonic3), 70)
+                                1->  GameCell(MaterialTheme.colorScheme.tertiary, painterResource(R.drawable.mario),60)
                             }
                         }
 
                         1 -> {
                             when (col){
-                                0-> cellColor.value = MaterialTheme.colorScheme.secondary
-                                1-> cellColor.value = MaterialTheme.colorScheme.surface
+                                0-> GameCell(MaterialTheme.colorScheme.secondary, painterResource(R.drawable.kirby),60)
+                                1-> GameCell(MaterialTheme.colorScheme.surface, painterResource(R.drawable.pacman),60)
                             }
                     }
                 }
-                    GameCell(color = cellColor.value ?: MaterialTheme.colorScheme.background)
+
                 }
             }
         }
@@ -147,7 +140,7 @@ fun GameBoard(){
 }
 
 @Composable
-fun GameCell(color: androidx.compose.ui.graphics.Color){
+fun GameCell(color: androidx.compose.ui.graphics.Color, painter:Painter, size:Int){
 
     Button(
         onClick = {/*funcionalidad al clickear la celda*/},
@@ -155,6 +148,11 @@ fun GameCell(color: androidx.compose.ui.graphics.Color){
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(containerColor = color)
     ){
+        Image(
+            painter = painter,
+            contentDescription = null,
+            modifier = Modifier.height(size.dp)
+        )
     }
 
 }
