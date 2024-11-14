@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SimonDice</string>
+    <string name="settings">Settings</string>
+    <string name="sonido">Sonido</string>
+    <string name="musica">Música</string>
+    <string name="notif">Notificaciones</string>
+    <string name="como_jugar">¿Cómo jugar?</string>
+    <string name="btn_cj">Ver</string>
 </resources>
