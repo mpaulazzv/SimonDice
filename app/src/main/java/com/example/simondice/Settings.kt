@@ -64,6 +64,7 @@ fun Settings() {
                     .clip(RoundedCornerShape(20.dp))
                     .height(400.dp)
                     .background(Color(0xFFFFD971))
+
                 ){
                     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
                         Spacer(modifier = Modifier.padding(5.dp))
