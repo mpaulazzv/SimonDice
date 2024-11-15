@@ -143,7 +143,7 @@ class SimonDiceViewModel : ViewModel() {
 
 
 @Composable()
-fun GameBoardScreen(viewModel: SimonDiceViewModel = SimonDiceViewModel()){
+fun GameBoardScreen(viewModel: SimonDiceViewModel = SimonDiceViewModel(), home: () -> Unit){
 
     val colorActual by remember { viewModel.colorActual }
     val secuenciaMostrada by remember { viewModel.secuenciaMostrada }
@@ -175,9 +175,9 @@ fun GameBoardScreen(viewModel: SimonDiceViewModel = SimonDiceViewModel()){
                 Image(
                     painter = painterResource(id = R.drawable.medal_ribbon_star_svgrepo_com),
                     contentDescription = "Medalla",
-                    modifier = Modifier.size(40.dp).clickable { viewModel.errorJugador()}
+                    modifier = Modifier.size(40.dp)
                 )
-                Text(text = "$hearts")
+
             }
             //Nivel
             Text("Lvl: $nivel", style = MaterialTheme.typography.bodySmall)
@@ -210,7 +210,7 @@ fun GameBoardScreen(viewModel: SimonDiceViewModel = SimonDiceViewModel()){
 
         Spacer(modifier = Modifier.height(60.dp))
         Button(
-            onClick = {/*funcionalidad para regresar al menú*/},
+            onClick = { home() },
             modifier = Modifier.height(40.dp).width(172.dp),
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(containerColor =

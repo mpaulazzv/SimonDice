@@ -9,9 +9,9 @@
     <string name="tittle_credits">Créditos</string>
     <string name="nuestro">Nuestro equipo</string>
     <string name="recursos">Recursos usados</string>
-    <string name="tittle_M">Maria Paula</string>
-    <string name="tittle_J">Juan Volkmar</string>
-    <string name="tittle_C">Carlos Bravo</string>
+    <string name="tittle_M">Maria</string>
+    <string name="tittle_J">Volkmar</string>
+    <string name="tittle_C">Carlos</string>
     <string name="subtittle_JC">Desarrollador</string>
     <string name="subtittle_M">Desarrolladora</string>
 </resources>

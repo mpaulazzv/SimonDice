@@ -14,15 +14,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.simondice.ui.theme.SimonDiceTheme
 
 class MainActivity : ComponentActivity() {
+    private lateinit var navHostController : NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            navHostController = rememberNavController()
             SimonDiceTheme {
-                Home()
+                NavigationWrapper(navHostController)
             }
         }
     }
