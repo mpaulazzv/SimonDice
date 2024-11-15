@@ -87,7 +87,7 @@ class SimonDiceViewModel : ViewModel() {
         delay(800)
         secuencia.forEachIndexed { index, color ->
             colorActual.value = color
-            delay(800)
+            delay(1200)
             colorActual.value = null
             delay(400)
         }

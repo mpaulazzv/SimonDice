@@ -8,11 +8,14 @@ import androidx.navigation.compose.composable
 
 @Composable
 fun NavigationWrapper(navHostController: NavHostController) {
-    NavHost(navController = navHostController, startDestination = "home") {
+    NavHost(navController = navHostController, startDestination = "splash") {
+        composable("splash"){ SplashScreen {  navHostController.navigate("home")}}
         composable("home") {
             Home({ navHostController.navigate("creditos") },
                 { navHostController.navigate("settings") },
-                { navHostController.navigate("juego") })
+                { navHostController.navigate("juego") },
+                { navHostController.navigate("instructions")}
+                )
         }
         composable("settings") {
             Settings { navHostController.navigate("home") }
@@ -22,6 +25,10 @@ fun NavigationWrapper(navHostController: NavHostController) {
         }
         composable("creditos") {
             Credits{ navHostController.navigate("home") }
+        }
+        composable("instructions") {
+            Instructions{ navHostController.navigate("home") }
+
         }
 
     }

@@ -51,7 +51,10 @@ import com.example.simondice.ui.theme.yellow
 
 
 @Composable
-fun Home(creditos: () -> Unit, settings: () -> Unit, juego: () -> Unit) {
+fun Home(creditos: () -> Unit,
+         settings: () -> Unit,
+         juego: () -> Unit,
+         instructions: () -> Unit, ) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -65,8 +68,7 @@ fun Home(creditos: () -> Unit, settings: () -> Unit, juego: () -> Unit) {
                     horizontal = 24.dp,
                     vertical = 0.dp
                 )
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
+            ,horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PlayAudio(LocalContext.current)
             Spacer(modifier = Modifier.padding(35.dp))
@@ -90,7 +92,7 @@ fun Home(creditos: () -> Unit, settings: () -> Unit, juego: () -> Unit) {
                 Text(text = "Jugar")
             }
             Spacer(modifier = Modifier.padding(35.dp))
-            HomeMenu(creditos)
+            HomeMenu(instructions, creditos)
         }
 
     }
@@ -247,6 +249,7 @@ fun AppIcon(
 
 @Composable
 fun HomeMenu(
+    instrucciones: () -> Unit,
     creditos: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -256,21 +259,21 @@ fun HomeMenu(
     ) {
         MenuOpc(
             color = white,
-            painter = painterResource(R.drawable.multiplayer),
-            text = "Board",
-            creditos = creditos
+            painter = painterResource(R.drawable.instructions),
+            text = "Instrucciones",
+            navegacion = instrucciones
         )
         MenuOpc(
             color = pink,
             painter = painterResource(R.drawable.home),
             text = "Home",
-            creditos = creditos
+            navegacion = {  }
         )
         MenuOpc(
             color = white,
             painter = painterResource(R.drawable.information),
             text = "Info",
-            creditos = creditos
+            navegacion = creditos
         )
     }
 }
@@ -281,7 +284,7 @@ fun MenuOpc(
     color: androidx.compose.ui.graphics.Color,
     painter: Painter,
     text: String,
-    creditos: () -> Unit
+    navegacion: () -> Unit
 ) {
 
     Column {
@@ -301,7 +304,7 @@ fun MenuOpc(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { creditos() },
+                    .clickable { navegacion() },
                 contentAlignment = Alignment.Center
             ) {
                 Column {
