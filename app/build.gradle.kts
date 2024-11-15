@@ -72,5 +72,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.lottie.compose)
-
+    implementation("com.google.android.gms:play-services-ads:23.3.0")
 }

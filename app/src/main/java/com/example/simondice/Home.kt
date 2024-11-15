@@ -69,9 +69,9 @@ fun Home(creditos: () -> Unit, settings: () -> Unit, juego: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PlayAudio(LocalContext.current)
-            Spacer(modifier = Modifier.padding(10.dp))
+            Spacer(modifier = Modifier.padding(35.dp))
             TopBar(settings)
-            Spacer(modifier = Modifier.padding(65.dp))
+            Spacer(modifier = Modifier.padding(35.dp))
             AppIcon()
             Spacer(modifier = Modifier.padding(25.dp))
             Button(
@@ -89,7 +89,7 @@ fun Home(creditos: () -> Unit, settings: () -> Unit, juego: () -> Unit) {
             {
                 Text(text = "Jugar")
             }
-            Spacer(modifier = Modifier.padding(65.dp))
+            Spacer(modifier = Modifier.padding(35.dp))
             HomeMenu(creditos)
         }
 
@@ -334,4 +334,5 @@ fun PlayAudio(
 ) {
     val mp: MediaPlayer = MediaPlayer.create(context, R.raw.main_song)
     mp.start()
+    mp.pause()
 }

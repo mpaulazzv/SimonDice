@@ -311,6 +311,7 @@ fun item(cosa: String, sitio: String, user: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBarc(navigateToHome: () -> Unit) {
+    Spacer(modifier = Modifier.padding(35.dp))
     TopAppBar(
         title = {
             Text(

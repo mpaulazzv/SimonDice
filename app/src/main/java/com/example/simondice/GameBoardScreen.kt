@@ -164,6 +164,7 @@ fun GameBoardScreen(viewModel: SimonDiceViewModel = viewModel(),home: () -> Unit
         verticalArrangement = Arrangement.Top
     ){
 
+        Spacer(modifier = Modifier.padding(25.dp))
         //Barra superior
         Spacer(modifier = Modifier.height(60.dp))
         Row(
@@ -392,10 +393,6 @@ fun GameOverDialog(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(onClick = {  }) {
-                    Text("Ver anuncio")
-                }
-
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
