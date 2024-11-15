@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
@@ -29,6 +30,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -55,6 +57,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 
 
 class SimonDiceViewModel : ViewModel() {
@@ -208,7 +215,9 @@ fun GameBoardScreen(viewModel: SimonDiceViewModel = viewModel()){
         Spacer(modifier = Modifier.height(60.dp))
         Button(
             onClick = {/*funcionalidad para regresar al menú*/},
-            modifier = Modifier.height(40.dp).width(172.dp),
+            modifier = Modifier
+                .height(40.dp)
+                .width(172.dp),
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(containerColor =
             MaterialTheme.colorScheme.primary)
@@ -296,7 +305,10 @@ fun GameCell(color: androidx.compose.ui.graphics.Color, painter: Painter, size:I
 
     Button(
         onClick = {onClick()},
-        modifier = Modifier.pulsateClick().height(170.dp).width(170.dp),
+        modifier = Modifier
+            .pulsateClick()
+            .height(170.dp)
+            .width(170.dp),
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(containerColor = animatedColor)
     ){
@@ -343,16 +355,61 @@ fun Modifier.pulsateClick() = composed {
 @Composable
 fun GameOverDialog(
     score: Int,
-    onPlayAgain: () -> Unit
+    onPlayAgain: () -> Unit,
 ) {
     AlertDialog(
         onDismissRequest = { },
-        title = { Text("¡Game Over!") },
-        text = { Text("Puntaje final: $score") },
+        title = { },
+        text = {
+            Surface(
+                modifier = Modifier.width(300.dp).height(280.dp),
+                color = MaterialTheme.colorScheme.background,
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(5.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.gameover))
+                    val progress by animateLottieCompositionAsState(
+                        composition = composition,
+                        iterations = LottieConstants.IterateForever
+                    )
+
+                    LottieAnimation(
+                        composition = composition,
+                        progress = progress,
+                        modifier = Modifier.size(300.dp)
+                    )
+                }
+            }
+        },
         confirmButton = {
-            Button(onClick = onPlayAgain) {
-                Text("Jugar de nuevo")
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(onClick = {  }) {
+                    Text("Ver anuncio")
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Button(onClick = onPlayAgain) {
+                        Text("Reintentar")
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = { }) {
+                        Text("Home")
+                    }
+                }
             }
         }
     )
 }
+
+
