@@ -60,7 +60,7 @@ class SimonDiceViewModel : ViewModel() {
     val secuanciaJugador = mutableStateListOf<Int>()
     val secuenciaMostrada = mutableStateOf(false)
     val colorActual = mutableStateOf<Int?>(null)
-    val vidas = mutableStateOf(3)
+    var vidas = mutableStateOf(3)
     val puntaje = mutableStateOf(0)
     val nivel = mutableStateOf(1)
     val isGameOver = mutableStateOf(false)
@@ -108,16 +108,17 @@ class SimonDiceViewModel : ViewModel() {
         }
     }
 
-    private fun errorJugador() {
+    fun errorJugador() {
         vidas.value--
         if (vidas.value <= 0) {
             isGameOver.value = true
         }
         secuanciaJugador.clear()
-        if (!isGameOver.value) {
+        if (isGameOver.value) {
             interaccion.value = false
             nuevaRonda()
         }
+
     }
 
     private fun secuenciaCompletada() {
@@ -174,8 +175,9 @@ fun GameBoardScreen(viewModel: SimonDiceViewModel = SimonDiceViewModel()){
                 Image(
                     painter = painterResource(id = R.drawable.medal_ribbon_star_svgrepo_com),
                     contentDescription = "Medalla",
-                    modifier = Modifier.size(40.dp)
+                    modifier = Modifier.size(40.dp).clickable { viewModel.errorJugador()}
                 )
+                Text(text = "$hearts")
             }
             //Nivel
             Text("Lvl: $nivel", style = MaterialTheme.typography.bodySmall)
@@ -296,7 +298,7 @@ fun GameCell(color: androidx.compose.ui.graphics.Color, painter: Painter, size:I
 
 
     Button(
-        onClick = onClick,
+        onClick = {onClick()},
         modifier = Modifier.pulsateClick().height(170.dp).width(170.dp),
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(containerColor = animatedColor)
