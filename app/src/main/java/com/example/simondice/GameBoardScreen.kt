@@ -1,7 +1,9 @@
 package com.example.simondice
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
+import android.media.MediaPlayer
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
@@ -52,6 +54,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
@@ -283,7 +286,8 @@ fun GameBoard(colorClickeado: (Int) -> Unit, colorActual: Int?, interaccion:Bool
                                 colorClickeado(color)
                             }
                         },
-                        isHighlighted = isHighlighted
+                        isHighlighted = isHighlighted,
+                        colorNro = colorActual
                     )
 
                 }
@@ -295,13 +299,22 @@ fun GameBoard(colorClickeado: (Int) -> Unit, colorActual: Int?, interaccion:Bool
 
 @Composable
 fun GameCell(color: androidx.compose.ui.graphics.Color, painter: Painter, size:Int,
-             onClick: () -> Unit, modifier: Modifier = Modifier, isHighlighted:Boolean){
+             onClick: () -> Unit, modifier: Modifier = Modifier, isHighlighted:Boolean, colorNro:Int?){
 
     val animatedColor by animateColorAsState(
         targetValue = if (isHighlighted) color.copy(alpha = 1f) else color.copy(alpha = 0.6f),
         label = "color"
     )
 
+    if(colorNro == 0){
+        PlayAudio(LocalContext.current, R.raw.sonic)
+    }else if (colorNro == 1){
+        PlayAudio(LocalContext.current, R.raw.mario)
+    }else if (colorNro == 2){
+        PlayAudio(LocalContext.current, R.raw.poyo)
+    }else if(colorNro == 3){
+        PlayAudio(LocalContext.current, R.raw.pac)
+    }
 
     Button(
         onClick = {onClick()},
@@ -412,4 +425,13 @@ fun GameOverDialog(
     )
 }
 
+@Composable
+fun PlayAudio(
+    context: Context,
+    audio: Int
+){
+    val mp: MediaPlayer = MediaPlayer.create(context, audio)
+    mp.start()
+    mp.setOnCompletionListener { mp.stop() }
+}
 
