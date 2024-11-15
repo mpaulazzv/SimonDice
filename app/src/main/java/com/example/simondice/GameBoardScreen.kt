@@ -54,6 +54,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 class SimonDiceViewModel : ViewModel() {
     val secuencia = mutableStateListOf<Int>()
@@ -71,9 +73,9 @@ class SimonDiceViewModel : ViewModel() {
     }
 
     fun nuevaRonda() {
-        interaccion.value = false
-        secuanciaJugador.clear()
         viewModelScope.launch {
+            interaccion.value = false
+            secuanciaJugador.clear()
             secuenciaMostrada.value = true
             addToSequence()
             showSequence()
@@ -84,18 +86,17 @@ class SimonDiceViewModel : ViewModel() {
 
     private suspend fun showSequence() {
         delay(800)
-        secuencia.forEach { color ->
+        secuencia.forEachIndexed { index, color ->
             colorActual.value = color
             delay(800)
+            colorActual.value = null
+            delay(400)
         }
-        colorActual.value = null
-        delay(400)
     }
 
     fun colorClickeado(color: Int) {
         if (interaccion.value && !isGameOver.value) {
             secuanciaJugador.add(color)
-
 
             if (secuanciaJugador[secuanciaJugador.size - 1] != secuencia[secuanciaJugador.size - 1]) {
                 errorJugador()
@@ -112,19 +113,20 @@ class SimonDiceViewModel : ViewModel() {
         vidas.value--
         if (vidas.value <= 0) {
             isGameOver.value = true
+            return
         }
         secuanciaJugador.clear()
-        if (!isGameOver.value) {
+        viewModelScope.launch {
             interaccion.value = false
-            nuevaRonda()
+            delay(500) // Pequeña pausa antes de mostrar la secuencia de nuevo
+            showSequence()
+            interaccion.value = true
         }
     }
 
     private fun secuenciaCompletada() {
         puntaje.value += 10
         nivel.value += 1
-        secuanciaJugador.clear()
-        interaccion.value = false
         nuevaRonda()
     }
 
@@ -142,7 +144,9 @@ class SimonDiceViewModel : ViewModel() {
 
 
 @Composable()
-fun GameBoardScreen(viewModel: SimonDiceViewModel = SimonDiceViewModel()){
+fun GameBoardScreen(){
+
+    val viewModel: SimonDiceViewModel = viewModel()
 
     val colorActual by remember { viewModel.colorActual }
     val secuenciaMostrada by remember { viewModel.secuenciaMostrada }
@@ -199,11 +203,8 @@ fun GameBoardScreen(viewModel: SimonDiceViewModel = SimonDiceViewModel()){
 
         Spacer(modifier = Modifier.height(80.dp))
 
-        GameBoard(colorClickeado = {color ->
-            if(!secuenciaMostrada){
-                viewModel.colorClickeado(color)
-            }
-        }, colorActual = colorActual, interaccion = interaccion
+        GameBoard(colorClickeado = viewModel::colorClickeado
+        , colorActual = colorActual, interaccion = interaccion
         )
 
         Spacer(modifier = Modifier.height(60.dp))
